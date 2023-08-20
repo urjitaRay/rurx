@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RuralRx</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #F7F7F7;
+    }
+    
+    header {
+      background-color: #C43A31;
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    nav li {
+      margin-right: 20px;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 20px auto;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 20px;
+    }
+    
+    .sidebar {
+      background-color: #EFEFEF;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .sidebar h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .sidebar li {
+      margin-bottom: 10px;
+    }
+    
+    .sidebar a {
+      color: #C43A31;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .main-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .main-content h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      color: #C43A31;
+    }
+    
+    .main-content p {
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    .appointment-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .appointment-card {
+      background-color: #F5F5F5;
+      padding: 20px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .appointment-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #C43A31;
+    }
+    
+    .appointment-card p {
+      margin-bottom: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    .appointment-card a {
+      color: white;
+      background-color: #C43A31;
+      text-decoration: none;
+      font
+
+	</style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <img src="rx logo.png" alt="RuralRx Logo" />
+        </div>
+        <ul>
+          <li><a href="#">Medical Activity</a></li>
+          <li><a href="#">Health Bulletin</a></li>
+          <li><a href="#">Health Insurance</a></li>
+          <li><a href="#">Virtual Clinic</a></li>
+          <li><a href="#">Daily Health Advice</a></li>
+          <li><a href="#">Appointments</a></li>
+          <li><a href="#">Login</a></li>
+        </ul>
+        <div class="search-box">
+          <input class="search-txt" type="text" placeholder="Search..." />
+          <a class="search-btn" href="#">
+            <i class="fa fa-search"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
+    <div class="banner">
+      <h1>Your health is our priority</h1>
+      <p>
+        RuralRx is a comprehensive healthcare solution designed to provide
+        access to quality medical care for rural communities. With RuralRx, you
+        can get medical advice, schedule appointments, and access medical
+        professionals from the comfort of your home.
+      </p>
+      <a href="#" class="btn">Get Started</a>
+    </div>
+    <div class="container">
+      <div class="card">
+        <img src="images/doctor1.jpg" alt="Doctor" />
+        <div class="card-content">
+          <h2>Consult with Experienced Medical Professionals</h2>
+          <p>
+            At RuralRx, we believe in providing our users with access to the best
+            medical professionals. Our team of experienced doctors and
+            healthcare providers are always available to help you with your
+            healthcare needs. With our virtual clinic, you can get the medical
+            advice you need from the comfort of your home.
+          </p>
+          <a href="#" class="btn">Book an Appointment</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/health-insurance.jpg" alt="Health Insurance" />
+        <div class="card-content">
+          <h2>Get Affordable Health Insurance Coverage</h2>
+          <p>
+            We understand the importance of having affordable and reliable health insurance coverage. That's why we offer a variety of health insurance plans to meet your needs and budget. Our plans cover everything from routine checkups to major medical expenses.</p>
+        <p>Our health insurance experts can help you find the right plan for you and your family. We'll take the time to understand your unique needs and guide you through the enrollment process. With RuralRx, you can have peace of mind knowing that you and your loved ones are protected.</p>
+        <form>
+			<label for="zip">Enter your ZIP code:</label>
+			<input type="text" id="zip" name="zip">
+			<label for="age">Enter your age:</label>
+			<input type="text" id="age" name="age">
+			<button type="submit">Find Plans</button>
+		</form>
+        <a href="#" class="btn btn-primary">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="virtual-clinic">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Connect with Our Virtual Clinic</h2>
+        <p>Can't make it to one of our physical locations? No problem. With RuralRx's virtual clinic, you can connect with healthcare providers online from the comfort of your own home. Our virtual clinic offers a wide range of services, from general consultations to mental health therapy.</p>
+        <p>Our online platform is easy to use and secure, so you can have peace of mind knowing that your personal information is protected. Plus, with our flexible scheduling options, you can find a time that works best for you.</p>
+        <form>
+			<label for="specialty">Select a specialty:</label>
+			<select id="specialty" name="specialty">
+				<option value="cardiology">Cardiology</option>
+				<option value="dermatology">Dermatology</option>
+				<option value="family-medicine">Family Medicine</option>
+				<option value="neurology">Neurology</option>
+			</select>
+			<label for="date">Select a date:</label>
+			<input type="date" id="date" name="date">
+			<label for="time">Select a time:</label>
+			<input type="time" id="time" name="time">
+			<button type="submit">Schedule Appointment</button>
+		</form>
+		<!-- code for scheduling a virtual appointment -->
+		<p>Schedule and virtual appointments with specialized doctor.</p>
+		<form>
+			<label for="doctor">Choose a Doctor:</label>
+            <select id="doctor">
+					<option value="john-smith">John Smith, MD</option>
+					<option value="jane-doe">Jane Doe, MD</option>
+					<option value="michael-brown">Michael Brown, MD</option>
+				</select>
+				<label for="date">Choose a Date:</label>
+				<input type="date" id="date">
+				<label for="time">Choose a Time:</label>
+				<input type="time" id="time">
+				<button type="submit">Schedule Appointment</button>
+			</form>
+        <a href="#" class="btn btn-primary">Learn More</a>
+      </div>
+      <div class="col-md-6">
+        <img src="https://via.placeholder.com/600x400" alt="Virtual Clinic">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="daily-health-advice">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Get Daily Health Advice</h2>
+        <p>Want to stay healthy and informed? Sign up for RuralRx's daily health advice newsletter. Our experts will provide you with tips and tricks for staying healthy, as well as the latest news and research on healthcare topics.</p>
+        <p>Plus, with our personalized recommendations based on your health history and preferences, you'll receive customized advice that's tailored to your unique needs.</p>
+        <a href="#" class="btn btn-primary">Sign Up Now</a>
+        <a href="#" class="btn btn-primary">Open Advice</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="upcoming-appointments">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Upcoming Appointments</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Doctor</th>
+              <th>Specialty</th>
+              <th>Location</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023-04-01</td>
+              <td>10:00 AM</td>
+              <td>Dr. John Smith</td>
+              <td>Cardiology</td>
+              <td>123 Main St, Anytown USA</td>
+              <td><a href="#">Cancel</a></td>
+            </tr>
+            <tr>
+              <td>2023-04-15</td>
+              <td>3:00 PM</td>
+              <td>Dr. Jane Doe</td>
+              <td>Dermatology</td>
+              <td>456 Oak Ave, Anytown USA</td>
+              <td><a href="#">Cancel</a></td>
+            </tr>
+            <tr>
+              <td>2023-05-02</td>
+              <td>11:30 AM</td>
+              <td>Dr. David Lee</td>
+              <td>Neurology</td>
+              <td>789 Maple St, Anytown USA</td>
+              <td><a href="#">Cancel</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+        <div class="calendar">
+          <!-- Calendar View will be implemented here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nearby-locations">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Find Nearby Locations</h2>
+        <div class="map">
+            <div class="row">
+      <div class="col-md-6">
+        <form class="search-form">
+          <input type="text" placeholder="Search for nearby clinics, hospitals, or pharmacies">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.577864424776!2d-96.80045168437015!3d32.78209898809173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb868bf19980b745e!2sCVS%20Pharmacy!5e0!3m2!1sen!2sus!4v1646770472594!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="location-list">
+          <ul>
+            <li>
+              <div class="location-info">
+                <h4>Medical Clinic of Houston</h4>
+                <p>5555 Del Monte Dr. Houston, TX 77056</p>
+                <p><i class="fas fa-phone"></i> (713) 520-6800</p>
+                <p><i class="fas fa-globe"></i> <a href="#">www.medicalclinicofhouston.com</a></p>
+              </div>
+            </li>
+            <li>
+              <div class="location-info">
+                <h4>Memorial Hermann Southwest Hospital</h4>
+                <p>7600 Beechnut St. Houston, TX 77074</p>
+                <p><i class="fas fa-phone"></i> (713) 456-5000</p>
+                <p><i class="fas fa-globe"></i> <a href="#">www.memorialhermann.org</a></p>
+              </div>
+            </li>
+            <li>
+              <div class="location-info">
+                <h4>Walgreens Pharmacy</h4>
+                <p>9802 Hillcroft St. Houston, TX 77096</p>
+                <p><i class="fas fa-phone"></i> (713) 776-0675</p>
+                <p><i class="fas fa-globe"></i> <a href="#">www.walgreens.com</a></p>
+              </div>
+            </li>
+            <li>
+              <div class="location-info">
+                <h4>St. Luke's Health - The Vintage Hospital</h4>
+                <p>20171 Chasewood Park Dr. Houston, TX 77070</p>
+                <p><i class="fas fa-phone"></i> (832) 534-5000</p>
+                <p><i class="fas fa-globe"></i> <a href="#">www.stlukeshealth.org</a></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </div>
+    </li>
+    </ul>
+   </div>
+  </div>
+     
+          <!-- Google Maps API will be implemented here -->
+        </div>
+      </div>
+ </section>
+
+<section id="chatbot">
+  <div class="container">
+    <h2>Get Quick Answers with our Chatbot</h2>
+    <p>Our chatbot is available 24/7 to answer your questions:</p>
+    <div id="chatbot-window">
+      <div id="chatbot-messages">
+        <div class="chatbot-message">
+          <p>Hello, how may I assist you today?</p>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input type="text" id="chatbot-input" placeholder="Type your message here...">
+        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<title>Login</title>
+	<style type="text/css">
+		.form-group {
+			margin-bottom: 20px;
+		}
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		input[type="text"],
+		input[type="password"] {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			width: 100%;
+		}
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>Login</h1>
+	<form id="login-form">
+		<div class="form-group">
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username" required>
+		</div>
+		<div class="form-group">
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="password" required>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Login">
+		</div>
+	</form>
+
+	<script type="text/javascript">
+		document.getElementById("login-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			if (username === "admin" && password === "admin123") {
+				alert("Login successful!");
+				// redirect to user dashboard page
+			} else {
+				alert("Invalid username or password. Please try again.");
+			}
+		});
+	</script>
+
+<section id="assessment">
+  <div class="container">
+    <h2>Take a Health Assessment</h2>
+    <p>Answer a few questions about your health to receive personalized health recommendations:</p>
+    <form>
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age">
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <label for="height">Height (in cm):</label>
+      <input type="number" id="height" name="height">
+      <label for="weight">Weight (in kg):</label>
+      <input type="number" id="weight" name="weight">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</section>
+
+<section id="medical-activity">
+  <div class="container">
+    <h2>Track Your Medical Activity</h2>
+    <p>View and track your medical history, appointments, and prescriptions:</p>
+    <div class="medical-activity-container">
+      <div class="medical-activity-card">
+        <h3>Prescription Refill</h3>
+        <p>You have a prescription for Lipitor that needs to be refilled.</p>
+        <p class="medical-activity-date">Scheduled for: 06/15/2023</p>
+      </div>
+      <div class="medical-activity-card">
+        <h3>Appointment Reminder</h3>
+        <p>You have an upcoming appointment with Dr. Smith on 06/20/2023.</p>
+        <p class="medical-activity-date">Scheduled for: 06/20/2023.</p>
+<section class="appointment-reminder">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="https://images.unsplash.com/photo-1604692498083-e6c4192bfe85?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8aGVhbHRoJTIwcHJvZmlsZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Doctor talking with patient" class="img-fluid">
+      </div>
+      <div class="col-md-6">
+        <h3>Appointment Reminder</h3>
+        <p>Never miss an appointment again! With our appointment reminder feature, you'll receive a text or email notification before your appointment. You can choose the type of reminder you prefer when you book your appointment.</p>
+        <a href="#" class="btn btn-primary">Book Appointment Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar">
+  <h2>Calendar View</h2>
+  <div id="calendar-container">
+    <!-- calendar view will be dynamically generated here -->
+  </div>
+</section>
+
+<section id="nearby-locations">
+  <h2>Nearby Locations</h2>
+  <div id="map-container">
+    <!-- map will be dynamically generated using Google Maps API -->
+  </div>
+</section>
+
+<head>
+	<title>Interactive Chatbox</title>
+	<style>
+		body {
+			background-color: #f2f2f2;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		
+		.chatbox {
+			background-color: #ffffff;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			padding: 10px;
+			position: fixed;
+			bottom: 0;
+			right: 30px;
+			width: 400px;
+			z-index: 1;
+		}
+		
+		.chatbox-header {
+			background-color: #4CAF50;
+			color: #ffffff;
+			padding: 5px;
+			font-size: 18px;
+			font-weight: bold;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+		
+		.chatbox-body {
+			height: 300px;
+			overflow-y: scroll;
+			padding: 10px;
+		}
+		
+		.chatbox-footer {
+			display: flex;
+			align-items: center;
+			background-color: #f2f2f2;
+			padding: 10px;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+		
+		.chatbox-input {
+			flex: 1;
+			border: none;
+			border-radius: 20px;
+			padding: 10px;
+			margin-right: 10px;
+		}
+		
+		.chatbox-send {
+			background-color: #4CAF50;
+			color: #ffffff;
+			border: none;
+			border-radius: 20px;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		
+		.chatbox-send:hover {
+			background-color: #3e8e41;
+		}
+		
+		.typing-indicator {
+			display: inline-block;
+			margin-right: 5px;
+			width: 10px;
+			height: 10px;
+			background-color: #4CAF50;
+			border-radius: 50%;
+			animation: typing 0.5s ease-in-out infinite;
+		}
+		
+		@keyframes typing {
+			0% {
+				transform: scale(1);
+			}
+			50% {
+				transform: scale(0.8);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+		
+		.quick-reply {
+			background-color: #4CAF50;
+			color: #ffffff;
+			border: none;
+			border-radius: 20px;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			margin-right: 10px;
+		}
+		
+		.quick-reply:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+
+<section id="login">
+  <h2>Login</h2>
+  <form>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" value="Login">
+  </form>
+</section>
+
+<section id="health-assessment">
+  <h2>Health Assessment</h2>
+  <form>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" min="1" max="120" required>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+      <option value="">--Select--</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="weight">Weight (in kg):</label>
+    <input type="number" id="weight" name="weight" min="1" max="300" required>
+
+    <label for="height">Height (in cm):</label>
+    <input type="number" id="height" name="height" min="1" max="300" required>
+
+    <label for="exercise-frequency">How often do you exercise?</label>
+    <select id="exercise-frequency" name="exercise-frequency" required>
+      <option value="">--Select--</option>
+      <option value="never">Never</option>
+      <option value="rarely">Rarely</option>
+      <option value="sometimes">Sometimes</option>
+      <option value="often">Often</option>
+      <option value="very-often">Very often</option>
+    </select>
+
+    <input type="submit" value="Submit">
+  </form>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>About Us</h3>
+        <p>RuralRx is a health platform aimed at improving access to affordable health care for people living in rural areas.</p>
+      </div>
+      <head>
+    <title>MediBot Chatbot</title>
+</head>
+<body>
+    <h1>MediBot Chatbot</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="usermsg" placeholder="Type your message here...">
+    <button type="submit" id="submitmsg" onclick="sendMsg()">Send</button>
+    <script>
+        function sendMsg() {
+            var usermsg = document.getElementById("usermsg").value;
+            document.getElementById("chatbox").innerHTML += "<p><strong>You:</strong> " + usermsg + "</p>";
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get?msg=" + usermsg, true);
+            xhr.onload = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    document.getElementById("chatbox").innerHTML += "<p><strong>MediBot:</strong> " + response + "</p>";
+                }
+            };
+            xhr.send();
+            document.getElementById("usermsg").value = "";
+        }
+    </script>
+</body>
+      <div class="col-md-4">
+        <h3>Contact Us</h3>
+        <p>150/1,Sadhana Villa,68,N.N Bagchi Road<br>
+           Kolkata, IND<br>
+           Phone: +91-9007614799<br>
+           Email: info@ruralrx.com</p>
+
+      <section class="follow-us">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Follow Us</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+      </div>
+      <div class="col-md-4">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+      <div class="col-md-4">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <p>&copy; 2023 RuralRx. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</html></script>
+
